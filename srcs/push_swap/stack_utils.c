@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:10:31 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/15 13:16:23 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/28 12:04:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_stack_node    *find_last(t_stack_node *stack)
 bool    stack_sorted(t_stack_node *stack)
 {
     if (!stack)
-        return (1);
+        return (true);
     while (stack->next)
     {
         if (stack->nbr > stack->next->nbr)
@@ -82,7 +82,7 @@ t_stack_node    *find_max(t_stack_node *stack)
         if (stack->nbr > max)
         {
             max = stack->nbr;
-            max_node - stack;
+            max_node = stack;
         }
         stack = stack->next;
     }

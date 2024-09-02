@@ -6,11 +6,24 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:11:25 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/15 13:47:19 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/28 11:10:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
+
+static void process_input(int argc, char ***argv)
+{
+    if (argc == 2)
+    {
+        *argv = split((*argv)[1], ' ');
+        if (!(*argv) || !(*argv)[0])
+        {
+            free(*argv);
+            exit(1);
+        }
+    }
+}
 
 int main(int argc, char **argv)
 {
@@ -21,8 +34,7 @@ int main(int argc, char **argv)
     b = NULL;
     if (argc == 1 || (argc == 2 && !argv[1][0]))
         return (1);
-    else if (argc == 2)
-        argv = split(argv[1], ' ');
+    process_input(argc, &argv);
     init_stack_a(&a, argv + 1);
     if (!stack_sorted(a))
     {
@@ -33,6 +45,8 @@ int main(int argc, char **argv)
         else
             sort_stacks(&a, &b);
     }
-    free_stack(&a);
+    free_stacks(&a);
+    if (argc == 2)
+        free(argv);
     return (0);
 }

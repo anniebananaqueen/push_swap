@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/15 13:41:11 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/02 11:07:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static long ft_atoi(const char *s)
 
     result = 0;
     sign = 1;
-    while (*s = ' ' || *s =- '\t' || *s == '\n' || \
+    while (*s == ' ' || *s == '\t' || *s == '\n' || 
             *s == '\r' || *s == '\f' || *s == '\v')
         s++;
     if (*s == '-' || *s == '+')
@@ -43,8 +43,8 @@ static void append_node(t_stack_node **stack, int n)
     node = malloc(sizeof(t_stack_node));
     if (!node)
         return ;
-    node->next = NULL;
     node->nbr = n;
+    node->next = NULL;
     if (!(*stack))
     {
         *stack = node;
@@ -58,7 +58,7 @@ static void append_node(t_stack_node **stack, int n)
     }
 }
 
-void    init_stack_a(t_stack_node *a, char **argv)
+void    init_stack_a(t_stack_node **a, char **argv)
 {
     long    n;
     int     i;
@@ -67,12 +67,12 @@ void    init_stack_a(t_stack_node *a, char **argv)
     while (argv[i])
     {
         if (error_syntax(argv[i]))
-            free_errors(a);
+            free_errors(*a);
         n = ft_atoi(argv[i]);
         if (n > INT_MAX || n < INT_MIN)
-            free_errors(a);
+            free_errors(*a);
         if (error_duplicate(*a, (int)n))
-            free_errors(a);
+            free_errors(*a);
         append_node(a, (int)n);
         i++;
     }
@@ -86,7 +86,7 @@ t_stack_node    *get_cheapest(t_stack_node *stack)
     {
         if (stack->cheapest)
             return (stack);
-        stack = stack->next
+        stack = stack->next;
     }
     return (NULL);
 }
@@ -100,7 +100,7 @@ void    prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_n
             if (top_node->above_median)
                 ra(stack, false);
             else
-            rra(stack, false);
+                rra(stack, false);
         }
         else if (stack_name == 'b')
         {

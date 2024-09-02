@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:11:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/15 13:48:49 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/28 09:54:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void set_target_b(t_stack_node *a, t_stack_node *b)
     while (b)
     {
         best_match_index = LONG_MAX;
+        target_node = NULL;
         current_a = a;
         while (current_a)
         {

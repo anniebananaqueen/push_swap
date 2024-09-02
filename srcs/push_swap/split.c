@@ -6,90 +6,98 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 16:13:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/15 12:55:37 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/02 10:46:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../../inc/push_swap.h"
 
-static int	word_counter(char const *s, char c)
-{
-	int	i;
-	int	state;
-	int	word_count;
-
-	i = 0;
-	state = 0;
-	word_count = 0;
-	while (s[i] != '\0')
-	{
-		if (state == 0 && s[i] != c)
-		{
-			word_count++;
-			state = 1;
-		}
-		if (state == 1 && s[i] == c)
-		{
-			state = 0;
-		}
-		i++;
-	}
-	return (word_count);
-}
-
-static int	strlen_wannabe(char const *s, char c, int start)
+void	free_split (char **array)
 {
 	int	i;
 
 	i = 0;
-	while (s[start] != '\0' && s[start] != c)
+	if (!array)
+		return ;
+	while (array[i])
 	{
-		start++;
+		free(array[i]);
 		i++;
 	}
-	return (i);
+	free(array);
 }
 
-static int	strlcpy_wannabe(char *array, const char *s, int start, char c)
+char	*substring(const char *s, int start, int len)
 {
-	int	i;
-
-	i = 0;
-	while (s[start] != '\0' && s[start] != c)
-	{
-		array[i] = s[start];
-		start++;
-		i++;
-	}
-	array[i] = '\0';
-	return (ft_strlen(array));
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**array;
+	char	*sub;
 	int		i;
-	int		j;
-	int		state;
 
-	array = malloc(sizeof(char *) * (word_counter(s, c) + 1));
+	if (!s || start < 0 || len < 0 || start >= (int)ft_strlen(s))
+		return (NULL);
+	sub = malloc(len + 1);
+	if (!sub)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start + i] != '\0')
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
+}
+
+int	substring_count(const char *s, char delimeter)
+{
+	int	count;
+	int	in_substring;
+
+	count = 0;
+	in_substring = 0;
+	if (!s)
+		return (0);
+	while (*s != '\0')
+	{
+		if (*s != delimeter && in_substring == 0)
+		{
+			in_substring = 1;
+			count++;
+		}
+		else if (*s == delimeter)
+			in_substring =0;
+		s++;
+	}
+	return (count);
+}
+
+char	**split_string(const char *s, char delimiter)
+{
+	int	i;
+	int	j;
+	int	start;
+	char	**result;
+
+	if (!s)
+		return (NULL);
+	result = malloc((substring_count(s, delimiter) + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
 	i = 0;
 	j = 0;
-	state = 0;
 	while (s[i])
 	{
-		if (state == 0 && s[i] != c)
-		{
-			array[j] = malloc(sizeof(char) * (strlen_wannabe(s, c, i) + 1));
-			i = i + strlcpy_wannabe((array[j]), s, i, c);
-			state = 1;
-			j++;
-		}
-		if (state == 1 && s[i] == c)
-			state = 0;
-		if (s[i] != '\0')
+		while (s[i] == delimiter)
 			i++;
+		start = i;
+		while (s[i] && s[i] != delimiter)
+			i++;
+		if (i > start)
+		{
+			result[j] = substring(s, start, i - start);
+			if (!result[j++])
+				return (free_split(result), NULL);
+		}
 	}
-	array[j] = NULL;
-	return (array);
+	result[j] = NULL;
+	return (result);
 }

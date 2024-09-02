@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:48:23 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/15 12:54:03 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/02 11:27:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct s_stack_node
 //Errors
 int error_syntax(char *str_n);
 int error_duplicate(t_stack_node *a, int n);
-void    free_stacks(t_stack_node **stack);
+void    free_stack(t_stack_node **stack);
 void    free_errors(t_stack_node **a);
 
 //Stack
 void    init_stack_a(t_stack_node **a, char **argv);
-char	**ft_split(char const *s, char c);
+char	**split_string(const char *s, char delimiter);
 
 //Nodes
 void    init_nodes_a(t_stack_node *a, t_stack_node *b);
