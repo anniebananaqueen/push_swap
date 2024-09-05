@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hexlow.c                                        :+:      :+:    :+:   */
+/*   ft_ptr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 21:37:44 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/04 16:47:44 by codespace        ###   ########.fr       */
+/*   Created: 2023/12/01 00:52:26 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/05 11:07:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../inc/libft.h"
 
-int	ft_hexlow(unsigned int n)
+static int	ft_ptr(uintptr_t n)
 {
 	char	num;
 	int		i;
@@ -20,7 +20,7 @@ int	ft_hexlow(unsigned int n)
 	i = 0;
 	if (n >= 16)
 	{
-		i += ft_hexlow(n / 16);
+		i += ft_ptr(n / 16);
 	}
 	if (n % 16 <= 9)
 	{
@@ -32,5 +32,20 @@ int	ft_hexlow(unsigned int n)
 		num = 'a' + (n % 16 - 10);
 		i += write(1, &num, 1);
 	}
+	return (i);
+}
+
+int	ft_check_null(uintptr_t n)
+{
+	int	i;
+
+	i = 0;
+	if (n == 0)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
+	i += ft_putstr("0x");
+	i += ft_ptr(n);
 	return (i);
 }

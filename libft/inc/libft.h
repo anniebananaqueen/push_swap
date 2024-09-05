@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 20:25:53 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:47:35 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 12:19:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
+# include <stdarg.h>
+# include <stdint.h>
+# include <stddef.h>
+# include "../../inc/push_swap.h"
 
 typedef struct s_list
 {
@@ -58,6 +62,14 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
+int	ft_hexlow(unsigned int n);
+int	ft_hexupp(unsigned int n);
+int	ft_putstr(char *s);
+int	ft_putnbrun(unsigned int n);
+int	ft_putnbr(int n);
+int	ft_putchar(char c);
+int	ft_printf(const char *format, ...);
+int	ft_check_null(uintptr_t n);
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

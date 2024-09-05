@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:43:32 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:51:33 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:31:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 int	ft_toupper(int c)
 {

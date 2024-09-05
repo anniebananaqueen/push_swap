@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:44:29 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:50:37 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:32:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

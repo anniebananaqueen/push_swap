@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:15:00 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:51:20 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:32:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 int	ft_atoi(const char *nptr)
 {

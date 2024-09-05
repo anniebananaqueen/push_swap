@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_hexlow.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 20:56:28 by apatkano          #+#    #+#             */
-/*   Updated: 2024/07/05 13:35:20 by codespace        ###   ########.fr       */
+/*   Created: 2023/11/29 21:37:44 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/05 10:31:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../../inc/libft.h"
 
-# include <stdarg.h>
-# include <stdint.h>
-# include <stdio.h>
-# include <unistd.h>
+int	ft_hexlow(unsigned int n)
+{
+	char	num;
+	int		i;
 
-int	ft_printf(const char *format, ...);
-int	ft_putchar(char c);
-int	ft_putnbr(int n);
-int	ft_putstr(char *s);
-int	ft_putnbrun(unsigned int n);
-int	ft_hexlow(unsigned int n);
-int	ft_hexupp(unsigned int n);
-int	check_null(uintptr_t n);
-
-#endif
+	i = 0;
+	if (n >= 16)
+	{
+		i += ft_hexlow(n / 16);
+	}
+	if (n % 16 <= 9)
+	{
+		num = '0' + n % 16;
+		i += write(1, &num, 1);
+	}
+	else if (n % 16 < 16)
+	{
+		num = 'a' + (n % 16 - 10);
+		i += write(1, &num, 1);
+	}
+	return (i);
+}

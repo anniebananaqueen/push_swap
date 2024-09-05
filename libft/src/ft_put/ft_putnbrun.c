@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putnbrun.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 20:56:28 by apatkano          #+#    #+#             */
-/*   Updated: 2024/07/02 14:57:13 by codespace        ###   ########.fr       */
+/*   Created: 2023/11/29 21:29:00 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/05 10:34:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../../inc/libft.h"
 
-# include <stdarg.h>
-# include <stdint.h>
-# include <stdio.h>
-# include <unistd.h>
+int	ft_putnbrun(unsigned int n)
+{
+	char	num;
+	int		i;
 
-int	ft_printf(const char *format, ...);
-int	ft_putchar(char c);
-int	ft_putnbr(int n);
-int	ft_putstr(char *s);
-int	ft_putnbrun(unsigned int n);
-int	ft_hexlow(unsigned int n);
-int	ft_hexupp(unsigned int n);
-int	check_null(uintptr_t n);
-
-#endif
+	i = 0;
+	if (n >= 10)
+	{
+		i += ft_putnbrun(n / 10);
+	}
+	num = '0' + n % 10;
+	i += write(1, &num, 1);
+	return (i);
+}

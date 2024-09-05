@@ -12,7 +12,7 @@
 
 #include "../../inc/push_swap.h"
 
-void	free_split (char **array)
+static	void	free_split (char **array)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ void	free_split (char **array)
 	free(array);
 }
 
-char	*substring(const char *s, int start, int len)
+static	char	*substring(const char *s, int start, int len)
 {
 	char	*sub;
 	int		i;
@@ -47,7 +47,7 @@ char	*substring(const char *s, int start, int len)
 	return (sub);
 }
 
-int	substring_count(const char *s, char delimeter)
+static	int	substring_count(const char *s, char delimeter)
 {
 	int	count;
 	int	in_substring;

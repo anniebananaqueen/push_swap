@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:01:24 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:48:32 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:37:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 int	ft_isalpha(int c)
 {

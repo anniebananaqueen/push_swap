@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 20:36:38 by apatkano          #+#    #+#             */
-/*   Updated: 2024/07/04 16:47:49 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:31:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../inc/libft.h"
 
 int	ft_hexupp(unsigned int n)
 {

@@ -12,7 +12,7 @@
 
 #include "../../inc/push_swap.h"
 
-static  void    rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
+void    rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
 {
     while (*b != cheapest_node->target_node && *a != cheapest_node)
             rr(a, b, false);
@@ -20,7 +20,7 @@ static  void    rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *ch
     current_index(*b);
 }
 
-static  void    rev_rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
+void    rev_rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
 {
     while (*b != cheapest_node->target_node && *a != cheapest_node)
             rrr(a, b, false);
@@ -28,7 +28,7 @@ static  void    rev_rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node
     current_index(*b);
 }
 
-static  void    move_a_to_b(t_stack_node **a, t_stack_node **b)
+void    move_a_to_b(t_stack_node **a, t_stack_node **b)
 {
     t_stack_node    *cheapest_node;
 
@@ -42,13 +42,13 @@ static  void    move_a_to_b(t_stack_node **a, t_stack_node **b)
     pb(b, a, false);
 }
 
-static  void    move_b_to_a(t_stack_node **a, t_stack_node **b)
+void    move_b_to_a(t_stack_node **a, t_stack_node **b)
 {
     prep_for_push(a, (*b)->target_node, 'a');
     pa(a, b, false);
 }
 
-static  void    min_on_top(t_stack_node **a)
+void    min_on_top(t_stack_node **a)
 {
     t_stack_node *min_node = find_min(*a);
     

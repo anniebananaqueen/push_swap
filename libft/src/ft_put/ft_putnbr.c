@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 15:58:35 by apatkano          #+#    #+#             */
-/*   Updated: 2024/07/04 16:48:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:34:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../inc/libft.h"
 
 int	ft_putnbr(int n)
 {

@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:58:37 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:48:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:36:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 19:12:01 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:50:21 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:33:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 static int	word_counter(char const *s, char c)
 {

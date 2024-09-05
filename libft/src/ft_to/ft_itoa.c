@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:05:17 by apatkano          #+#    #+#             */
-/*   Updated: 2024/08/17 18:51:24 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:31:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 static void	czechs_fills(int n, int len, char *str)
 {

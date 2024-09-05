@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:44:03 by marvin            #+#    #+#             */
-/*   Updated: 2024/08/17 18:50:54 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:32:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../inc/libft.h"
 
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {

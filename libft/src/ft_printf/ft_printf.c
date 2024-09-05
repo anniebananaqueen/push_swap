@@ -6,13 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 20:49:51 by apatkano          #+#    #+#             */
-/*   Updated: 2024/07/05 13:27:06 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 12:19:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
-#include <stdio.h>
-#include <unistd.h>
+#include "../../inc/libft.h"
 
 static void	ft_printf_checker(const char *format, va_list args, int *j)
 {
@@ -24,7 +22,7 @@ static void	ft_printf_checker(const char *format, va_list args, int *j)
 	if (format[i] == 's')
 		*j += ft_putstr(va_arg(args, char *));
 	if (format[i] == 'p')
-		*j += check_null(va_arg(args, uintptr_t));
+		*j += ft_check_null(va_arg(args, uintptr_t));
 	if (format[i] == 'd' || format[i] == 'i')
 		*j += ft_putnbr(va_arg(args, int));
 	if (format[i] == 'u')

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:11:25 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/28 11:10:01 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 09:14:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void process_input(int argc, char ***argv)
 {
     if (argc == 2)
     {
-        *argv = split((*argv)[1], ' ');
+        *argv = split_string((*argv)[1], ' ');
         if (!(*argv) || !(*argv)[0])
         {
             free(*argv);
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
         else
             sort_stacks(&a, &b);
     }
-    free_stacks(&a);
+    free_stack(&a);
     if (argc == 2)
         free(argv);
     return (0);

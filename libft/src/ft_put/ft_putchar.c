@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbrun.c                                      :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 21:29:00 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/04 16:48:13 by codespace        ###   ########.fr       */
+/*   Created: 2023/11/28 16:04:21 by apatkano          #+#    #+#             */
+/*   Updated: 2024/09/05 10:34:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../inc/libft.h"
 
-int	ft_putnbrun(unsigned int n)
+int	ft_putchar(char c)
 {
-	char	num;
-	int		i;
-
-	i = 0;
-	if (n >= 10)
-	{
-		i += ft_putnbrun(n / 10);
-	}
-	num = '0' + n % 10;
-	i += write(1, &num, 1);
-	return (i);
+	write(1, &c, 1);
+	return (1);
 }

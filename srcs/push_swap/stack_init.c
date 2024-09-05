@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/02 11:07:31 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 09:29:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-static long ft_atoi(const char *s)
+static long custom_atoi(const char *s)
 {
     long    result;
     int     sign;
@@ -67,12 +67,12 @@ void    init_stack_a(t_stack_node **a, char **argv)
     while (argv[i])
     {
         if (error_syntax(argv[i]))
-            free_errors(*a);
-        n = ft_atoi(argv[i]);
+            free_errors(a);
+        n = custom_atoi(argv[i]);
         if (n > INT_MAX || n < INT_MIN)
-            free_errors(*a);
+            free_errors(a);
         if (error_duplicate(*a, (int)n))
-            free_errors(*a);
+            free_errors(a);
         append_node(a, (int)n);
         i++;
     }
