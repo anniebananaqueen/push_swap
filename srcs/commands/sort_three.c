@@ -6,9 +6,10 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:19:03 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 19:03:15 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/19 19:28:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/push_swap.h"
 
@@ -56,6 +57,7 @@ void    sort_stacks(t_stack_node **a, t_stack_node **b)
 {
     int len_a;
     
+    
     len_a = stack_len(*a);
     ft_printf("Sorting stacks, length of A: %d\n", len_a);
     while (len_a > 3 && !stack_sorted(*a))
@@ -75,3 +77,4 @@ void    sort_stacks(t_stack_node **a, t_stack_node **b)
     current_index(*a);
     min_on_top(a);
 }
+

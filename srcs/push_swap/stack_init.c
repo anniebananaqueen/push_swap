@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 19:19:32 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/19 19:29:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,3 +130,4 @@ void    prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_n
         }
     }
 }
+
