@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 18:10:25 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/19 19:19:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool custom_atoi(const char *s, long *result)
     }
     if (!ft_isdigit(*s))
         return (false);
-    while
+    while (ft_isdigit(*s))
     {
         temp_result = temp_result * 10 + (*s++ - '0');
         if ((temp_result * sign) > INT_MAX || (temp_result * sign) < INT_MIN)
@@ -50,19 +50,24 @@ static bool append_node(t_stack_node **stack, int n)
     
     node = malloc(sizeof(t_stack_node));
     if (!node)
+    {
+        ft_printf("Memory allocation failed\n");
         return (false);
+    }
     node->nbr = n;
     node->next = NULL;
     if (!(*stack))
     {
         *stack = node;
         node->prev = NULL;
+        ft_printf("First node added to stack: %d\n", n);
     }
     else
     {
         last_node = find_last(*stack);
         last_node->next = node;
         node ->prev = last_node;
+        printf("Appended node to stack: %d\n", n); 
     }
     return (true);
 }
@@ -72,17 +77,22 @@ void    init_stack_a(t_stack_node **a, char **argv)
     long    n;
     int     i;
     
-    i = 1;
+    i = 0;
+    ft_printf("Initializing stack_a...\n");
     while (argv[i])
     {
+        ft_printf("Processing input: %s\n", argv[i]);
         if (error_syntax(argv[i]))
             free_errors(a);
         if (!custom_atoi(argv[i], &n))
+            free_errors(a);
+        if (n > INT_MAX || n < INT_MIN)
             free_errors(a);
         if (error_duplicate(*a, (int)n))
             free_errors(a);
         if (!append_node(a, (int)n))
             free_errors(a);
+        ft_printf("Appended %d to stack_a\n", n);
         i++;
     }
 }
