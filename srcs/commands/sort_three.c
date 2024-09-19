@@ -6,12 +6,40 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:19:03 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 19:28:34 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/19 20:18:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../inc/push_swap.h"
+
+int calculate_median(t_stack_node *stack)
+{
+    int len;
+    int *arr;
+    int i;
+    int median;
+    int median_index;
+    t_stack_node    *current;
+
+    len = stack_len(stack);
+    arr = malloc(sizeof(int) * len);
+    if (!arr)
+        return (-1);
+    current = stack;
+    i = 0;
+    while (current)
+    {
+        arr[i] = current->nbr;
+        current = current->next;
+        i++;
+    }
+    quick_sort(arr, 0, len - 1);
+    median_index = len / 2;
+    median = arr[median_index];
+    free (arr);
+    return (median);
+}
 
 void    sort_three(t_stack_node **a)
 {
@@ -56,22 +84,24 @@ void    sort_three(t_stack_node **a)
 void    sort_stacks(t_stack_node **a, t_stack_node **b)
 {
     int len_a;
+    int median;
     
     
     len_a = stack_len(*a);
-    ft_printf("Sorting stacks, length of A: %d\n", len_a);
+    median = calculate_median(*a);
     while (len_a > 3 && !stack_sorted(*a))
     {
-        ft_printf("Pushing element from A to B\n");
+        if ((*a)->nbr < median)
+        {
         pb(b, a, true);
         len_a--;
+        }
+        else
+            ra(a, true);
     }
-    ft_printf("Calling sort_three for remaining elements in A\n");
     sort_three(a);
     while (*b)
     {
-        ft_printf("Moving element from B to A\n");
-        init_nodes_b(*a, *b);
         move_b_to_a(a, b);
     }
     current_index(*a);

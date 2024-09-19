@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 14:30:15 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/27 17:06:38 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/19 20:37:27 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,31 @@ static  void    swap(t_stack_node **head)
 
 void    sa(t_stack_node **a, bool print)
 {
-    swap(a);
-    if (print)
-        ft_printf("sa\n");
+    if ((*a)->nbr > (*a)->next->nbr)
+    {    
+        swap(a);
+        if (print)
+            ft_printf("sa\n");
+    }
 }
 
 void    sb(t_stack_node **b, bool print)
 {
-    swap(b);
-    if (print)
-        ft_printf("sb\n");
+    if ((*b)->nbr > (*b)->next->nbr)
+    {
+        swap(b);
+        if (print)
+            ft_printf("sb\n");
+    }
 }
 
 void    ss(t_stack_node **a, t_stack_node **b, bool print)
 {
-    swap(a);
-    swap(b);
-    if (print)
-        ft_printf("ss\n");
+    if ((*a)->nbr > (*a)->next->nbr || (*b)->nbr > (*b)->next->nbr)
+    {
+        swap(a);
+        swap(b);
+        if (print)
+            ft_printf("ss\n");
+    }
 }
