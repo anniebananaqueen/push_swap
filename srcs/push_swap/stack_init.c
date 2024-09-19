@@ -12,13 +12,14 @@
 
 #include "../../inc/push_swap.h"
 
-static long custom_atoi(const char *s)
+static bool custom_atoi(const char *s, long *result)
 {
-    long    result;
+    long    temp_result;
     int     sign;
 
-    result = 0;
+    temp_result = 0;
     sign = 1;
+    *result = 0;
     while (*s == ' ' || *s == '\t' || *s == '\n' || 
             *s == '\r' || *s == '\f' || *s == '\v')
         s++;
@@ -28,21 +29,28 @@ static long custom_atoi(const char *s)
             sign = -1;
         s++;
     }
-    while (ft_isdigit(*s))
-        result = result * 10 + (*s++ - '0');
-    return (result * sign);
+    if (!ft_isdigit(*s))
+        return (false);
+    while
+    {
+        temp_result = temp_result * 10 + (*s++ - '0');
+        if ((temp_result * sign) > INT_MAX || (temp_result * sign) < INT_MIN)
+        return (false);
+    }
+    if (*s != '\0')
+        return (false);
+    *result = temp_result * sign;
+    return (true);
 }
 
-static void append_node(t_stack_node **stack, int n)
+static bool append_node(t_stack_node **stack, int n)
 {
     t_stack_node    *node;
     t_stack_node    *last_node;
     
-    if (!stack)
-        return ;
     node = malloc(sizeof(t_stack_node));
     if (!node)
-        return ;
+        return (false);
     node->nbr = n;
     node->next = NULL;
     if (!(*stack))
@@ -54,8 +62,9 @@ static void append_node(t_stack_node **stack, int n)
     {
         last_node = find_last(*stack);
         last_node->next = node;
-        node->prev = last_node;
+        node ->prev = last_node;
     }
+    return (true);
 }
 
 void    init_stack_a(t_stack_node **a, char **argv)
@@ -63,17 +72,17 @@ void    init_stack_a(t_stack_node **a, char **argv)
     long    n;
     int     i;
     
-    i = 0;
+    i = 1;
     while (argv[i])
     {
         if (error_syntax(argv[i]))
             free_errors(a);
-        n = custom_atoi(argv[i]);
-        if (n > INT_MAX || n < INT_MIN)
+        if (!custom_atoi(argv[i], &n))
             free_errors(a);
         if (error_duplicate(*a, (int)n))
             free_errors(a);
-        append_node(a, (int)n);
+        if (!append_node(a, (int)n))
+            free_errors(a);
         i++;
     }
 }
@@ -111,3 +120,4 @@ void    prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_n
         }
     }
 }
+
