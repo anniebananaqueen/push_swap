@@ -6,12 +6,47 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:11:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/28 09:54:23 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/19 23:21:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
+void    move_b_to_a(t_stack_node **a, t_stack_node **b)
+{
+    t_stack_node *best_move = NULL;
+    t_stack_node *current;
+    int min_cost = INT_MAX;
+    int cost;
+
+    best_move = NULL;
+    current = *b;
+    min_cost = INT_MAX;
+
+    while (current)
+    {
+        cost = calculate_move_cost(*a, *b, current);
+        if (cost < min_cost)
+        {
+            min_cost = cost;
+            best_move = current;
+        }
+        current = current->next;
+    }
+    if (best_move)
+        pa(a, b, true); 
+}
+
+int cost_analysis_b(t_stack_node *a, t_stack_node *b)
+{
+    int cost_a;
+    int cost_b;
+    
+    cost_a = calculate_rotations_to_position(a, b->nbr);
+    cost_b = calculate_rotations_to_top(b);
+
+    return (cost_a + cost_b);
+}
 static void set_target_b(t_stack_node *a, t_stack_node *b)
 {
     t_stack_node    *current_a;
@@ -38,6 +73,17 @@ static void set_target_b(t_stack_node *a, t_stack_node *b)
         else
             b->target_node = target_node;
         b = b->next;        
+    }
+}
+
+void prep_for_push(t_stack_node **a, t_stack_node *target)
+{
+    while (*a != target)
+    {
+        if (target->above_median)
+            ra(a, true);
+        else
+            rra(a, true);
     }
 }
 

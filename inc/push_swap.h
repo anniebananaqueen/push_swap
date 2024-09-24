@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:48:23 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 20:19:04 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 12:09:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ void move_a_to_b(t_stack_node **a, t_stack_node **b);
 void move_b_to_a(t_stack_node **a, t_stack_node **b);
 void min_on_top(t_stack_node **a);
 int calculate_median(t_stack_node *stack);
-
+int calculate_rotations_to_top(t_stack_node *stack, t_stack_node *target);
+int calculate_rotations_to_position(t_stack_node *a, int value);
+int calculate_move_cost (t_stack_node *a, t_stack_node *b, t_stack_node *b_elem);
+void    quick_sort(int *arr, int low, int high);
+int partition(int *arr, int low, int high);
 //Commands
 void    sa(t_stack_node **a, bool print);
 void    sb(t_stack_node **b, bool print);

@@ -6,43 +6,19 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:33:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 21:08:42 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 11:52:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void    move_a_to_b(t_stack_node **a, t_stack_node **b)
-{
-    t_stack_node    *best_move;
-    t_stack_node    *current;
-    int min_cost;
-    int cost;
-    
-    best_move = NULL;
-    min_cost = INT_MAX;
-    current = *b;
-    while (current)
-    {
-        cost = calculate_move_cost(*a, current);
-        if (cost < min_cost)
-        {
-            min_cost = cost;
-            best_move = current;
-        }
-        current = current->next;
-    }
-    if (best_move)
-        move_b_to_a(a, b);
-}
-
-int calculate_move_cost (t_stack_node *a, t_stack_node *b_elem)
+int calculate_move_cost (t_stack_node *a, t_stack_node *b, t_stack_node *b_elem)
 {
     int cost_a;
     int cost_b;
 
-    cost_a = min_on_top(a, b_elem->nbr);
-    cost_b = min_on_top(b_elem);
+    cost_a = calculate_rotations_to_position(a, b->nbr);
+    cost_b = calculate_rotations_to_top(b, b_elem);
 
     return (cost_a + cost_b);
 }

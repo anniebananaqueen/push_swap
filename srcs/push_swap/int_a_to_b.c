@@ -6,74 +6,55 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:25:44 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/05 09:10:58 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 12:15:37 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void    current_index(t_stack_node *stack)
+void    move_a_to_b(t_stack_node **a, t_stack_node **b)
 {
-    int i;
-    int median;
+    t_stack_node    *best_move;
+    t_stack_node    *current;
+    int min_cost;
+    int cost;
     
-    i = 0;
-    if (!stack)
-        return;
-    median = stack_len(stack) / 2;
-    while (stack)
+    best_move = NULL;
+    min_cost = INT_MAX;
+    current = *a;
+    while (current)
     {
-        stack->index = i;
-        stack->above_median = (i <= median);
-        stack = stack->next;
-        ++i;
-    }
-}
-
-static  void    set_target_a(t_stack_node *a, t_stack_node *b)
-{
-    t_stack_node    *current_b;
-    t_stack_node    *target_node;
-    long             best_match_index;
-    
-    while (a)
-    {
-      best_match_index = LONG_MIN;
-      target_node = NULL;
-      current_b = b;
-      while (current_b)
-      {
-        if (current_b->nbr < a->nbr && current_b->nbr > best_match_index)
+        cost = cost_analysis_a(*a, *b);
+        if (cost < min_cost)
         {
-            best_match_index = current_b->nbr;
-            target_node = current_b;
+            min_cost = cost;
+            best_move = current;
         }
-        current_b = current_b->next;
-      }
-    if (best_match_index == LONG_MIN)
-        a->target_node = find_max(b);
-    else
-        a->target_node = target_node;
-    a = a->next;
+        current = current->next;
     }
+    if (best_move)
+        pb(b, a, true);
 }
 
-static  void    cost_analysis_a(t_stack_node *a, t_stack_node *b)
+int cost_analysis_a(t_stack_node *a, t_stack_node *b)
 {
-    int len_a;
-    int len_b;
+    int cost_a;
+    int cost_b;
 
-    len_a = stack_len(a);
-    len_b = stack_len(b);
+    cost_a = calculate_rotations_to_position(a, b->nbr);
+    cost_b = calculate_rotations_to_top(b, b_elem);
+    
+    return(cost_a + cost_b);
+}
+
+void    set_target_a(t_stack_node *a, t_stack_node *b)
+{
+    t_stack_node    *target_node;
+
     while (a)
     {
-        a->push_cost = a->index;
-        if (!a->above_median)
-            a->push_cost = len_a - a->index;
-        if (a->target_node->above_median)
-            a->push_cost += a->target_node->index;
-        else
-            a->push_cost += len_b - a->target_node->index;
+        target_node = find_best_target(b, a->nbr);
+        a->target_node = target_node;
         a = a->next;
     }
 }
@@ -83,8 +64,6 @@ void    set_cheapest(t_stack_node *stack)
     long             cheapest_value;
     t_stack_node    *cheapest_node;
 
-    if (!stack)
-        return;
     cheapest_value = LONG_MAX;
     cheapest_node = NULL;
     while (stack)
