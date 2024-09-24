@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:11:19 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 23:21:18 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 14:38:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void    move_b_to_a(t_stack_node **a, t_stack_node **b)
 {
-    t_stack_node *best_move = NULL;
+    t_stack_node *best_move;
     t_stack_node *current;
-    int min_cost = INT_MAX;
+    int min_cost;
     int cost;
 
     best_move = NULL;
@@ -43,10 +43,11 @@ int cost_analysis_b(t_stack_node *a, t_stack_node *b)
     int cost_b;
     
     cost_a = calculate_rotations_to_position(a, b->nbr);
-    cost_b = calculate_rotations_to_top(b);
+    cost_b = calculate_rotations_to_top(b, b->target_node);
 
     return (cost_a + cost_b);
 }
+
 static void set_target_b(t_stack_node *a, t_stack_node *b)
 {
     t_stack_node    *current_a;
@@ -76,14 +77,18 @@ static void set_target_b(t_stack_node *a, t_stack_node *b)
     }
 }
 
-void prep_for_push(t_stack_node **a, t_stack_node *target)
+void    current_index(t_stack_node *stack)
 {
-    while (*a != target)
+    int index;
+    t_stack_node    *current;
+
+    index = 0;
+    current = stack;
+    while (current)
     {
-        if (target->above_median)
-            ra(a, true);
-        else
-            rra(a, true);
+        current->index = index;
+        index++;
+        current = current->next;
     }
 }
 

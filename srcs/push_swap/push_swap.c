@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:11:25 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 19:17:53 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 13:21:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int main(int argc, char **argv)
     t_stack_node    *a;
     t_stack_node    *b;
     t_stack_node    *current;
+    int i;
 
     a = NULL;
     b = NULL;
@@ -75,6 +76,14 @@ int main(int argc, char **argv)
         }
     free_stack(&a);
     if (argc == 2)
+    {
+        i = 0;
+        while(argv[i])
+        {
+            free(argv[i]);
+            i++;
+        }
         free(argv);
+    }
     return (0);
 }

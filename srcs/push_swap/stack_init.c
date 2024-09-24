@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 19:29:42 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 14:29:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,16 @@ void    prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_n
         if (stack_name == 'a')
         {
             if (top_node->above_median)
-                ra(stack, false);
+                ra(stack, true);
             else
-                rra(stack, false);
+                rra(stack, true);
         }
         else if (stack_name == 'b')
         {
             if (top_node->above_median)
-                rb(stack, false);
+                rb(stack, true);
             else
-                rrb(stack, false);
+                rrb(stack, true);
         }
     }
 }
-

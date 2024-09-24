@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:33:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 11:52:36 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 15:14:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,51 @@ void    rev_rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheape
 
 void    min_on_top(t_stack_node **a)
 {
-    t_stack_node *min_node;
+    t_stack_node    *min_node;
+    t_stack_node    *current;
+    int len;
+    int rotations;
 
     min_node = find_min(*a);
+    current = *a;
+    len = stack_len(*a);
+    rotations = 0;
     
-    while ((*a)->nbr != min_node->nbr)
+    while (current != min_node)
     {
-        if (min_node->above_median)
-            ra(a, true);
-        else
+        rotations++;
+        current = current->next;
+    }
+    if (rotations > len / 2)
+    {
+        while ((*a)->nbr != min_node->nbr)
             rra(a, true);
     }
+    else
+    {
+        while ((*a)->nbr != min_node->nbr)
+            ra(a, true);
+    }
+}
+
+void print_stacks(t_stack_node *a, t_stack_node *b)
+{
+    t_stack_node *current;
+
+    ft_printf("Stack A: ");
+    current = a;
+    while (current)
+    {
+        ft_printf("%d ", current->nbr);
+        current = current->next;
+    }
+    ft_printf("\n");
+    ft_printf("Stack B: ");
+    current = b;
+    while (current)
+    {
+        ft_printf("%d ", current->nbr);
+        current = current->next;
+    }
+    ft_printf("\n");
 }

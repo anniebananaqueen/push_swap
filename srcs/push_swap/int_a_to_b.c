@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:25:44 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 12:15:37 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 14:12:27 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int cost_analysis_a(t_stack_node *a, t_stack_node *b)
     int cost_b;
 
     cost_a = calculate_rotations_to_position(a, b->nbr);
-    cost_b = calculate_rotations_to_top(b, b_elem);
+    cost_b = calculate_rotations_to_top(b, b->target_node);
     
     return(cost_a + cost_b);
 }
 
-void    set_target_a(t_stack_node *a, t_stack_node *b)
+static void    set_target_a(t_stack_node *a, t_stack_node *b)
 {
     t_stack_node    *target_node;
 
@@ -80,10 +80,9 @@ void    set_cheapest(t_stack_node *stack)
 }
 
 void    init_nodes_a(t_stack_node *a, t_stack_node *b)
-{
+{   
     current_index(a);
     current_index(b);
     set_target_a(a, b);
-    cost_analysis_a(a, b);
     set_cheapest(a);
 }

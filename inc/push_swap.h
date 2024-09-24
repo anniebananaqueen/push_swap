@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:48:23 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 12:09:38 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 15:13:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void    init_nodes_b(t_stack_node *a, t_stack_node *b);
 void    current_index(t_stack_node *stack);
 void    set_cheapest(t_stack_node *stack);
 t_stack_node    *get_cheapest(t_stack_node *stack);
-void    prep_for_push(t_stack_node **s, t_stack_node *n, char c);
+void prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_name);
 
 //Stack utils
 int stack_len(t_stack_node *stack);
@@ -57,11 +57,15 @@ void move_a_to_b(t_stack_node **a, t_stack_node **b);
 void move_b_to_a(t_stack_node **a, t_stack_node **b);
 void min_on_top(t_stack_node **a);
 int calculate_median(t_stack_node *stack);
+int cost_analysis_a(t_stack_node *a, t_stack_node *b);
+int cost_analysis_b(t_stack_node *a, t_stack_node *b);
 int calculate_rotations_to_top(t_stack_node *stack, t_stack_node *target);
 int calculate_rotations_to_position(t_stack_node *a, int value);
 int calculate_move_cost (t_stack_node *a, t_stack_node *b, t_stack_node *b_elem);
 void    quick_sort(int *arr, int low, int high);
 int partition(int *arr, int low, int high);
+t_stack_node *find_best_target(t_stack_node *b, int value);
+
 //Commands
 void    sa(t_stack_node **a, bool print);
 void    sb(t_stack_node **b, bool print);
@@ -78,5 +82,6 @@ void    pb(t_stack_node **b, t_stack_node **a, bool print);
 //Algorithm
 void    sort_three(t_stack_node **a);
 void    sort_stacks(t_stack_node **a, t_stack_node **b);
+void print_stacks(t_stack_node *a, t_stack_node *b);
 
 #endif
