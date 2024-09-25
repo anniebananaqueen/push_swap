@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:37:18 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/27 15:39:38 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 18:22:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,23 @@ void    rr(t_stack_node **a, t_stack_node **b, bool print)
     rotate(b);
     if (print)
         ft_printf("rr\n");
+}
+
+void rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
+{
+    while ((*a != cheapest_node) || (*b != cheapest_node->target_node))
+    {
+        if (*a != cheapest_node && *b != cheapest_node->target_node)
+        {
+            rr(a, b, true);
+        }
+        else if (*a != cheapest_node)
+        {
+            ra(a, true);
+        }
+        else if (*b != cheapest_node->target_node)
+        {
+            rb(b, true);
+        }
+    }
 }

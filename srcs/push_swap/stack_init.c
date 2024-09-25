@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 14:29:35 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/24 19:32:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,31 @@ void    init_stack_a(t_stack_node **a, char **argv)
     }
 }
 
-t_stack_node    *get_cheapest(t_stack_node *stack)
+void init_nodes(t_stack_node *stack_to_init, t_stack_node *opposite_stack)
 {
-    if (!stack)
-        return (NULL);
-    while (stack)
+    t_stack_node *current;
+
+    // Initialize indices for both stacks
+    current_index(stack_to_init);
+    current_index(opposite_stack);
+
+    // Set target nodes based on which stack we are initializing
+    if (stack_to_init != NULL && opposite_stack != NULL)
     {
-        if (stack->cheapest)
-            return (stack);
-        stack = stack->next;
+        t_stack_node *target_node;
+        current = stack_to_init;
+
+        // Set target nodes for stack_to_init
+        while (current)
+        {
+            target_node = find_best_target(opposite_stack, current->nbr);
+            current->target_node = target_node;
+            current = current->next;
+        }
     }
-    return (NULL);
+
+    // Set the cheapest node for pushing based on calculated costs
+    set_cheapest(stack_to_init);
 }
 
 void    prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_name)

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:25:44 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 14:12:27 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/25 12:19:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void    move_a_to_b(t_stack_node **a, t_stack_node **b)
     t_stack_node    *current;
     int min_cost;
     int cost;
+    int moves_to_top_a;
     
     best_move = NULL;
     min_cost = INT_MAX;
@@ -33,7 +34,54 @@ void    move_a_to_b(t_stack_node **a, t_stack_node **b)
         current = current->next;
     }
     if (best_move)
+    {
+        moves_to_top_a = calculate_rotations_to_top(*a, best_move);
+        while (moves_to_top_a-- > 0)
+            ra(a, true);
+        while (moves_to_top_a++ < 0)
+            rra(a, true);
         pb(b, a, true);
+    }
+}
+
+void    push_back_from_b(t_stack_node **a, t_stack_node **b)
+{
+    while (*b)
+    {
+        t_stack_node *best_move;
+        int rotations_a;
+        int rotations_b;
+
+        best_move = find_best_move_to_a(*a, *b);
+        rotations_a = calculate_rotations_to_position(*a, best_move->nbr);
+        rotations_b = calculate_rotations_to_top(*b, best_move);
+        if (rotations_a <= stack_len(*a) / 2)
+        {
+            while (rotations_a--)
+                ra(a, true);
+        }
+        else
+        {
+            while (rotations_a++)
+                rra(a, true);
+        }
+        if (rotations_b <= stack_len(*b) / 2)
+        {
+            while (rotations_b--)
+                rb(b, true);
+        }
+        else
+        {
+            while (rotations_b++)
+                rrb(b, true);
+        }
+        pa(a, b, true);
+
+        ft_printf("Pushed from B to A: Stack A: ");
+        print_stack(*a);
+        ft_printf("Stack B: ");
+        print_stack(*b);
+    }
 }
 
 int cost_analysis_a(t_stack_node *a, t_stack_node *b)
@@ -47,42 +95,33 @@ int cost_analysis_a(t_stack_node *a, t_stack_node *b)
     return(cost_a + cost_b);
 }
 
-static void    set_target_a(t_stack_node *a, t_stack_node *b)
+void    push_below_median(t_stack_node **a, t_stack_node **b, int median)
 {
-    t_stack_node    *target_node;
+    int len_a;
+    int pushed_to_b;
+    int rotation_count;
 
-    while (a)
+    len_a = stack_len(*a);
+    pushed_to_b = 0;
+    rotation_count = len_a;
+    while (pushed_to_b < len_a / 2)
     {
-        target_node = find_best_target(b, a->nbr);
-        a->target_node = target_node;
-        a = a->next;
-    }
-}
-
-void    set_cheapest(t_stack_node *stack)
-{
-    long             cheapest_value;
-    t_stack_node    *cheapest_node;
-
-    cheapest_value = LONG_MAX;
-    cheapest_node = NULL;
-    while (stack)
-    {
-        if (stack->push_cost < cheapest_value)
+        if ((*a)->nbr < median)
         {
-            cheapest_value = stack->push_cost;
-            cheapest_node = stack;
-        }
-        stack = stack->next;
-    }
-    if (cheapest_node)
-        cheapest_node->cheapest = true;
-}
+            pb(b, a, true);
+            pushed_to_b++;
 
-void    init_nodes_a(t_stack_node *a, t_stack_node *b)
-{   
-    current_index(a);
-    current_index(b);
-    set_target_a(a, b);
-    set_cheapest(a);
+            ft_printf("Pushed to B: Stack A: ");
+            print_stack(*a);
+            ft_printf("Stack B: ");
+            print_stack(*b);
+        }
+        else
+        {
+            if (!manage_rotation(a, &rotation_count, false, true))
+            {
+                break;
+            }
+        }
+    }
 }
