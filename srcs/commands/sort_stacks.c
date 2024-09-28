@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:33:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/25 12:05:10 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/28 15:17:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,86 @@
 
 void sort_stacks(t_stack_node **a, t_stack_node **b)
 {
+    int median;
+
+    median = calculate_median(*a);
+
+    // Early exit if the stack is already sorted
+    if (stack_sorted(*a))
+    {
+        ft_printf("Stack is already sorted. Exiting early.\n");
+        return;
+    }
+
+    // Step 1: Push elements from `a` to `b` based on the median
     while (stack_len(*a) > 3)
     {
-        if ((*a)->nbr <= calculate_median(*a))
+        ft_printf("Checking stack before operation. Top value: %d, Median: %d\n", (*a)->nbr, median);
+
+        if ((*a)->nbr <= median)
         {
-            pb(b, a, true);
+            pb(b, a, true);  // Push to stack `b`
+            median = calculate_median(*a);  // Recalculate the median after modifying the stack
         }
         else
         {
-            ra(a, true);
+            ra(a, true);  // Rotate stack `a`
+        }
+
+        // Check if stack `a` is already sorted during rotation
+        if (stack_sorted(*a))
+        {
+            ft_printf("Stack is sorted during process. Exiting rotation loop.\n");
+            break;
         }
     }
-    sort_three(a);
+
+    // Step 2: Sort the remaining 3 elements in `a`
+    sort_three(a);  // Sort the remaining 3 elements in stack `a`
+
+    // Step 3: Push elements back from `b` to `a`
     while (*b)
     {
         move_b_to_a(a, b);
+
+        // Step 4: Check if the stack needs to be aligned
+        if (!stack_sorted(*a))
+        {
+            ft_printf("Stack A is not yet sorted after the move. Aligning...\n");
+            final_rotation_handling(a);  // Align stack `a` after each `pa`
+        }
+        else
+        {
+            ft_printf("Stack A is sorted after the move.\n");
+            break;  // Exit the loop once the stack is sorted
+        }
     }
-    final_rotation_handling(a);
+
+    // Step 5: Final alignment if needed
+    final_rotation_handling(a);  // Ensure the stack is correctly aligned after all moves
 }
 
 void min_on_top(t_stack_node **a)
 {
-    int len;
-    int rotations;
-    t_stack_node    *min_node;
-    t_stack_node    *current;
-    
-    if (stack_sorted(*a)) 
-    {
-        ft_printf("Stack is already sorted. No need for min_on_top.\n");
-        return ;
-    }
+    t_stack_node *min_node = find_min(*a);  // Get the node containing the minimum value
+    int min_pos = find_position_of_node(*a, min_node);  // Assuming a helper function to find position
 
-    min_node = find_min(*a);
-    len = stack_len(*a);
-    rotations = 0;
-    current = *a;
-    while (current != min_node)
+    int stack_size = stack_len(*a);
+
+    if (min_pos <= stack_size / 2)
     {
-        rotations++;
-        current = current->next;
-    }
-    ft_printf("Minimum value: %d, Rotations needed: %d\n", min_node->nbr, rotations);
-    if (rotations > len / 2)
-    {
-        ft_printf("Using reverse rotations (rra)\n");
-        while (*a != min_node)
+        // Rotate forward (ra) to bring the minimum node to the top
+        while (min_pos-- > 0)
         {
-            rra(a, true);
-            ft_printf("Stack A after rra: ");
-            print_stack(*a);
+            ra(a, true);
         }
     }
     else
     {
-        ft_printf("Using forward rotations (ra)\n");
-        while (*a != min_node)
+        // Reverse rotate (rra) to bring the minimum node to the top
+        while (min_pos++ < stack_size)
         {
-            ra(a, true);
-            ft_printf("Stack A after ra: ");
-            print_stack(*a);
+            rra(a, true);
         }
     }
 }

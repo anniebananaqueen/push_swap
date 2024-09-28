@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:19:03 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/25 12:12:30 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/28 15:22:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,22 @@ void sort_three_or_more(t_stack_node **a, t_stack_node **b)
 
 int find_kth_smallest(int *arr, int len, int k)
 {
-    int i;
-    int j;
-    int temp;
-    
-    i = 0;
-    j = i + 1;
-    while (i <= k)
+    int i, j, temp;
+
+    for (i = 0; i <= k; i++)
     {
-        while (j < len)
+        for (j = i + 1; j < len; j++)
         {
             if (arr[j] < arr[i])
             {
+                // Swap arr[i] and arr[j] to sort the elements
                 temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
-            j++;
         }
-        i++;
     }
-    return (arr[k]);
+    return arr[k];  // Return the k-th smallest element
 }
 
 int calculate_median(t_stack_node *stack)
@@ -134,7 +129,15 @@ int calculate_median(t_stack_node *stack)
         current = current->next;
         i++;
     }
+
     median_index = len / 2;
+
+    // Debugging print: Array before finding the median
+    ft_printf("Array before median calculation: ");
+    for (int j = 0; j < len; j++)
+        ft_printf("%d ", arr[j]);
+    ft_printf("\n");
+
     if (len % 2 == 0)
         median = (find_kth_smallest(arr, len, median_index - 1) + find_kth_smallest(arr, len, median_index)) / 2;
     else
@@ -156,4 +159,36 @@ bool is_fully_sorted(t_stack_node *stack)
         current = current->next;
     }
     return (true);
+}
+
+void final_rotation_handling(t_stack_node **a)
+{
+    int min_pos = find_min_position(*a);  // Find the position of the smallest number
+    int stack_size = stack_len(*a);
+
+    if (min_pos == 0)
+    {
+        ft_printf("Stack is already aligned with the minimum at the top.\n");
+        return;  // If the smallest number is already at the top, no need for rotations
+    }
+
+    // Determine if it's faster to rotate forward (ra) or reverse (rra)
+    if (min_pos <= stack_size / 2)
+    {
+        // Rotate forward (ra) to bring the minimum to the top
+        while (min_pos-- > 0)
+        {
+            ft_printf("Performing ra to align stack...\n");
+            ra(a, true);
+        }
+    }
+    else
+    {
+        // Rotate backward (rra) to bring the minimum to the top
+        while (min_pos++ < stack_size)
+        {
+            ft_printf("Performing rra to align stack...\n");
+            rra(a, true);
+        }
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:25:44 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/25 12:19:16 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/25 19:13:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,27 @@ void    push_below_median(t_stack_node **a, t_stack_node **b, int median)
             }
         }
     }
+}
+
+int find_min_position(t_stack_node *stack)
+{
+    t_stack_node *min_node = find_min(stack);  // Correct: find_min returns a pointer to the node
+    int min_value = min_node->nbr;             // Access the value in the node
+    int pos = 0;
+    int min_pos = 0;
+    t_stack_node *current = stack;
+
+    // Traverse the stack to find the position of the minimum value
+    while (current)
+    {
+        if (current->nbr == min_value)
+        {
+            min_pos = pos;
+            break;
+        }
+        pos++;
+        current = current->next;
+    }
+
+    return min_pos;  // Return the position of the minimum value in the stack
 }

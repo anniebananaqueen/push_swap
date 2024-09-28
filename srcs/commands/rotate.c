@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:37:18 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 18:22:39 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/27 22:18:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,24 @@ static void rotate(t_stack_node **stack)
 {
     t_stack_node    *first_node;
     t_stack_node    *last_node;
-    
+
     if (!*stack || !(*stack)->next)
         return;
+    
+    ft_printf("Rotating the stack...\n");
+
     first_node = *stack;
     last_node = find_last(*stack);
-    
+
+    // Move the first node to the last position
     *stack = first_node->next;
     (*stack)->prev = NULL;
     last_node->next = first_node;
     first_node->next = NULL;
     first_node->prev = last_node;
+
+    // Print the stack state after rotation
+    print_stack(*stack);  // You can implement this to print the stack state
 }
 
 void    ra(t_stack_node **a, bool print)
