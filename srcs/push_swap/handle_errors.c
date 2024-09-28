@@ -6,58 +6,58 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:08:58 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/25 12:19:42 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/28 16:17:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-int error_syntax(char *str_n)
-{
-    if (!str_n || (*str_n != '+' && *str_n != '-' && !ft_isdigit(*str_n)))
-        return (1);
-    if (*str_n == '+' || *str_n == '-')
-        str_n++;
-    while (*str_n)
-    {
-        if (!ft_isdigit(*str_n))
-            return(1);
-        str_n++;
+bool check_duplicate(t_stack_node *stack) {
+    t_stack_node *ptr1 = stack;
+    while (ptr1 && ptr1->next) {
+        t_stack_node *ptr2 = ptr1->next;
+        while (ptr2) {
+            if (ptr1->value == ptr2->value)
+                return true;  // Duplicate found
+            ptr2 = ptr2->next;
+        }
+        ptr1 = ptr1->next;
     }
-    return (0);
+    return false;
 }
 
-int error_duplicate(t_stack_node *a, int n)
-{
-   while (a)
-   {
-    if (a->nbr == n)
-        return (1);
-    a = a->next;
-   }
-   return (0);
-}
-
-void    free_stack(t_stack_node **stack)
-{
-    t_stack_node    *tmp;
-    t_stack_node    *current;
-
-    if (!stack || !*stack)
-        return;
-    current = *stack;
-    while (current)
-    {
-        tmp = current->next;
-        free(current);
-        current = tmp;
+bool check_valid_input(char *input) {
+    int i = 0;
+    if (input[i] == '-' || input[i] == '+') i++;
+    while (input[i]) {
+        if (!ft_isdigit(input[i]))
+            return false;
+        i++;
     }
-    *stack = NULL;
+    return true;
 }
 
-void    free_errors(t_stack_node **a)
-{
-    free_stack(a);
-    ft_printf("Error\n");
-    exit (1);
+void handle_error(char *error_message) {
+    ft_putendl(error_message);
+    exit(EXIT_FAILURE);
+}
+
+void validate_args(int argc, char **argv) {
+    for (int i = 1; i < argc; i++) {
+        if (!check_valid_input(argv[i])) {
+            handle_error("Error: Invalid input");
+        }
+    }
+}
+
+bool check_sorted(t_stack_node *stack) {
+    if (!stack || !stack->next)
+        return true;  // Single element or empty stack is considered sorted
+    
+    while (stack && stack->next) {
+        if (stack->value > stack->next->value)
+            return false;  // Not sorted
+        stack = stack->next;
+    }
+    return true;  // Stack is sorted
 }

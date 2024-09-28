@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:48:23 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/28 15:46:06 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/28 16:26:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,43 +19,38 @@
 
 typedef struct s_stack_node
 {
-	int			        nbr; //nbr to sort
-	int			        index; //nbr position in the stack
-    int                 push_cost; //commands in total
-    bool                above_median; //to calculate 'push_cost'
-    bool                cheapest; //cheapest node
-    struct s_stack_node *target_node; //the target node of a node in the opposite stack
-	struct s_stack_node	*next;
-	struct s_stack_node	*prev;
+	int			        value; // renamed from 'nbr', this is the value to be sorted
+	int			        index; // index in the stack (if needed for advanced sorting or optimization)
+    int                 push_cost; // commands in total, used for cost-based optimizations
+    bool                above_median; // to calculate 'push_cost' (if this logic is necessary for your strategy)
+    bool                cheapest; // cheapest node flag for optimization
+    struct s_stack_node *target_node; // target node in the opposite stack (used for optimized pushes)
+	struct s_stack_node	*next; // pointer to the next node in the stack
+	struct s_stack_node	*prev; // pointer to the previous node in the stack (for doubly linked list functionality)
 }	t_stack_node;
 
 //Errors
-int     error_syntax(char *str_n);
-int     error_duplicate(t_stack_node *a, int n);
-void    free_stack(t_stack_node **stack);
-void    free_errors(t_stack_node **a);
-
+bool check_duplicate(t_stack_node *stack);
+bool check_valid_input(char *input);
+void handle_error(char *error_message);
+void validate_args(int argc, char **argv);
+bool check_sorted(t_stack_node *stack);
 //Stack
-void    init_stack_a(t_stack_node **a, char **argv);
 char	**split_string(const char *s, char delimiter);
-long    ft_atol(const char *str);
 
 //Nodes
-void    init_nodes(t_stack_node **stack_to_init, t_stack_node *new_node);
-void    current_index(t_stack_node *stack);
 void    set_cheapest(t_stack_node *stack);
-void    prep_for_push(t_stack_node **stack, t_stack_node *top_node, char stack_name);
-t_stack_node *create_new_node(int value);
 void rotate_to_position(t_stack_node **a, int pos);
 int find_optimal_position_in_a(t_stack_node *a, int value_to_insert);
 
 //Stack utils
-bool    stack_sorted(t_stack_node *a); //checking if stack is sorted
-bool    manage_rotation(t_stack_node **stack, int *rotation_count, bool reverse, bool print);
+void swap_top(t_stack_node **stack, bool print);
+void rotate_stack(t_stack_node **stack, bool print);
+void reverse_rotate_stack(t_stack_node **stack, bool print);
+void push_to_stack(t_stack_node **from, t_stack_node **to, bool print);
+int  find_position(t_stack_node *stack, int value);
 bool    is_fully_sorted(t_stack_node *stack);
-void    print_stack(t_stack_node *stack);
 void    validate_input(t_stack_node *a);
-void    print_stacks(t_stack_node *a, t_stack_node *b);
 int     find_min_position(t_stack_node *stack);
 int     stack_len(t_stack_node *stack);
 int     calculate_median(t_stack_node *stack);
@@ -88,14 +83,20 @@ int calculate_rotations_for_b(t_stack_node *b, t_stack_node *target);
 
 //Algorithm
 void    sort_three(t_stack_node **a);
-void    sort_stacks(t_stack_node **a, t_stack_node **b);
 void    sort_three_or_more(t_stack_node **a, t_stack_node **b);
-void    finalize_sort(t_stack_node **a);
 void    final_rotation_handling(t_stack_node **a);
 void    move_a_to_b(t_stack_node **a, t_stack_node **b);
 void    move_b_to_a(t_stack_node **a, t_stack_node **b);
-void    min_on_top(t_stack_node **a);
 void    push_below_median(t_stack_node **a, t_stack_node **b, int median);
 void    push_back_from_b(t_stack_node **a, t_stack_node **b);
+
+int  get_stack_size(t_stack_node *stack);
+t_stack_node *get_stack_top(t_stack_node *stack);
+t_stack_node *get_stack_bottom(t_stack_node *stack);
+bool is_stack_empty(t_stack_node *stack);
+int  get_min_value(t_stack_node *stack);
+void sort_stack_a(t_stack_node **a, t_stack_node **b);
+void sort_stack_b(t_stack_node **a, t_stack_node **b);
+
 
 #endif
