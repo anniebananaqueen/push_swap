@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:08:58 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 18:48:51 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 19:52:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void    free_errors(t_stack_node **a)
 {
     if (a)
         free_stack(a);
-    ft_printf("Error\n");
+    ft_putstr("Error\n");
     exit (EXIT_FAILURE);
 }

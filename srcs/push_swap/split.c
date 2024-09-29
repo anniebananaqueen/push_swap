@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 16:13:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 13:42:32 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 20:01:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,31 @@ static	char	*substring(const char *s, int start, int len)
 	return (sub);
 }
 
-static	int	substring_count(const char *s, char delimeter)
+static	int	substring_count(char *s, char delimeter)
 {
 	int	count;
-	int	in_substring;
+	bool	in_substring;
 
 	count = 0;
-	in_substring = 0;
-	if (!s)
-		return (0);
 	while (*s != '\0')
 	{
-		if (*s != delimeter && in_substring == 0)
+		in_substring = false;
+		while (*s == delimeter && *s)
+			s++;
+		while (*s != delimeter && *s)
 		{
-			in_substring = 1;
-			count++;
+			if (!in_substring)
+			{
+				count++;
+				in_substring = true;
+			}
+			s++;
 		}
-		else if (*s == delimeter)
-			in_substring = 0;
-		s++;
 	}
 	return (count);
 }
 
-char	**split_string(const char *s, char delimiter)
+char	**split_string(char *s, char delimiter)
 {
 	int	i;
 	int	j;

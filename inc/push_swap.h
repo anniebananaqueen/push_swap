@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:48:23 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 18:36:56 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 20:01:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void    sort_three(t_stack_node **a);
 void    sort_three_or_more(t_stack_node **a, t_stack_node **b);
 
 //Push_swap Directory
-char	**split_string(const char *s, char delimiter);
+char	**split_string(char *s, char delimiter);
 void	stack_init(t_stack_node **a, char **argv, bool print);
 t_stack_node	*find_last_node(t_stack_node *head);
 void	append_node(t_stack_node **stack, int nbr);
