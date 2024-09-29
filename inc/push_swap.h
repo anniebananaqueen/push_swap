@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:48:23 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 20:32:21 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 21:22:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_stack_node
 int error_syntax(char *str_n);
 int error_duplicate(t_stack_node *a, int n);
 void    free_stack(t_stack_node **stack);
-void    free_errors(t_stack_node **a, char **argv);
+void    free_errors(t_stack_node **a, char **argv, bool slay);
 
 // Commands Directory
 void    pa(t_stack_node **a, t_stack_node **b, bool print);
@@ -57,7 +57,7 @@ void    sort_three_or_more(t_stack_node **a, t_stack_node **b);
 //Push_swap Directory
 char	**split_string(char *s, char delimiter);
 void	free_split (char **array);
-void	stack_init(t_stack_node **a, char **argv, bool print);
+void	stack_init(t_stack_node **a, char **argv, bool slay);
 t_stack_node	*find_last_node(t_stack_node *head);
 void	append_node(t_stack_node **stack, int nbr);
 t_stack_node	*find_min(t_stack_node *stack);
@@ -67,6 +67,5 @@ void	set_current_pos(t_stack_node *stack);
 void	set_price(t_stack_node *a, t_stack_node *b);
 void	set_cheapest(t_stack_node *b);
 void	init_nodes(t_stack_node *a, t_stack_node *b);
-
 
 #endif
