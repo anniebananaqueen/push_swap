@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:08:58 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 20:16:20 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 20:32:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ void    free_stack(t_stack_node **stack)
     *stack = NULL;
 }
 
-void    free_errors(t_stack_node **a)
+void    free_errors(t_stack_node **a, char **argv)
 {
-    free_stack(a);
+    if (a && *a)
+        free_stack(a);
+    if (argv)
+        free_split(argv);
     ft_putstr("Error\n");
     exit (EXIT_FAILURE);
 }

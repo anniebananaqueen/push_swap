@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 16:13:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 20:01:03 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 20:31:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-static	void	free_split (char **array)
+void	free_split (char **array)
 {
 	int	i;
 
