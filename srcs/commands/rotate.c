@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:37:18 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/27 22:18:59 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 17:03:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,31 @@
 
 static void rotate(t_stack_node **stack)
 {
-    t_stack_node    *first_node;
     t_stack_node    *last_node;
+    int length;
 
-    if (!*stack || !(*stack)->next)
-        return;
-    
-    ft_printf("Rotating the stack...\n");
-
-    first_node = *stack;
-    last_node = find_last(*stack);
-
-    // Move the first node to the last position
-    *stack = first_node->next;
+    length = get_stack_size(*stack);
+    if (stack == NULL || *stack == NULL || length == 1)
+        return ;
+    last_node = find_last_node(*stack);
+    last_node->next = *stack;
+    *stack = (*stack)->next;
     (*stack)->prev = NULL;
-    last_node->next = first_node;
-    first_node->next = NULL;
-    first_node->prev = last_node;
-
-    // Print the stack state after rotation
-    print_stack(*stack);  // You can implement this to print the stack state
+    last_node->next->prev = last_node;
+    last_node->next->next = NULL;
 }
 
 void    ra(t_stack_node **a, bool print)
 {
     rotate(a);
-    if (print)
+    if (!print)
         ft_printf("ra\n");
 }
 
 void    rb(t_stack_node **b, bool print)
 {
     rotate(b);
-    if (print)
+    if (!print)
         ft_printf("rb\n");
 }
 
@@ -54,25 +46,6 @@ void    rr(t_stack_node **a, t_stack_node **b, bool print)
 {
     rotate(a);
     rotate(b);
-    if (print)
+    if (!print)
         ft_printf("rr\n");
-}
-
-void rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
-{
-    while ((*a != cheapest_node) || (*b != cheapest_node->target_node))
-    {
-        if (*a != cheapest_node && *b != cheapest_node->target_node)
-        {
-            rr(a, b, true);
-        }
-        else if (*a != cheapest_node)
-        {
-            ra(a, true);
-        }
-        else if (*b != cheapest_node->target_node)
-        {
-            rb(b, true);
-        }
-    }
 }

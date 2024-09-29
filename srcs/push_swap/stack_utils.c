@@ -6,85 +6,90 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:10:31 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/28 16:15:13 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 18:02:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void swap_top(t_stack_node **stack, bool print) {
-    if (!*stack || !(*stack)->next)
-        return;
-    t_stack_node *first = *stack;
-    t_stack_node *second = first->next;
-    
-    first->next = second->next;
-    second->next = first;
-    *stack = second;
-    
-    if (print)
-        ft_putendl("swap");
+t_stack_node	*find_last_node(t_stack_node *head)
+{
+	if (head == NULL)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
 }
 
-void rotate_stack(t_stack_node **stack, bool print, char *stack_name) {
-    if (!*stack || !(*stack)->next)
-        return;
-    t_stack_node *first = *stack;
-    *stack = first->next;
-    t_stack_node *last = *stack;
-    
-    while (last->next)
-        last = last->next;
-    
-    last->next = first;
-    first->next = NULL;
-    
-    if (print) {
-        ft_putstr("r");
-        ft_putendl(stack_name);
-    }
+void	append_node(t_stack_node **stack, int nbr)
+{
+	t_stack_node	*node;
+	t_stack_node	*last_node;
+
+	if (stack == NULL)
+		return ;
+	node = malloc(sizeof(t_stack_node));
+	if (node == NULL)
+		return ;
+	node->next = NULL;
+	node->value = nbr;
+	if (*stack == NULL)
+	{
+		*stack = node;
+		node->prev = NULL;
+	}
+	else
+	{
+		last_node = find_last_node(*stack);
+		last_node->next = node;
+		node->prev = last_node;
+	}
 }
 
-void reverse_rotate_stack(t_stack_node **stack, bool print, char *stack_name) {
-    if (!*stack || !(*stack)->next)
-        return;
-    t_stack_node *last = *stack;
-    t_stack_node *second_last = NULL;
-    
-    while (last->next) {
-        second_last = last;
-        last = last->next;
-    }
-    
-    second_last->next = NULL;
-    last->next = *stack;
-    *stack = last;
-    
-    if (print) {
-        ft_putstr("rr");
-        ft_putendl(stack_name);
-    }
+t_stack_node	*find_min(t_stack_node *stack)
+{
+	long			min;
+	t_stack_node	*min_node;
+
+	if (stack == NULL)
+		return (NULL);
+	min = LONG_MAX;
+	while (stack)
+	{
+		if (stack->value < min)
+		{
+			min = stack->value;
+			min_node = stack;
+		}
+		stack = stack->next;
+	}
+	return (min_node);
 }
 
-void push_to_stack(t_stack_node **from, t_stack_node **to, bool print) {
-    if (!*from)
-        return;
-    t_stack_node *temp = *from;
-    *from = (*from)->next;
-    temp->next = *to;
-    *to = temp;
-    
-    if (print)
-        ft_putendl("push");
+t_stack_node	*return_cheapest(t_stack_node *stack)
+{
+	if (stack == NULL)
+		return (NULL);
+	while (stack)
+	{
+		if (stack->cheapest)
+			return (stack);
+		stack = stack->next;
+	}
+	return (NULL);
 }
 
-int find_position(t_stack_node *stack, int value) {
-    int position = 0;
-    while (stack) {
-        if (stack->value == value)
-            return position;
-        stack = stack->next;
-        position++;
-    }
-    return -1;  // Not found
+int	get_stack_size(t_stack_node *stack)
+{
+	int	count;
+
+	if (stack == NULL)
+		return (0);
+	count = 0;
+	while (stack)
+	{
+		++count;
+		stack = stack->next;
+	}
+	return (count);
 }

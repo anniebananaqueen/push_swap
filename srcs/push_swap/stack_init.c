@@ -6,28 +6,66 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/28 16:24:13 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 18:56:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-t_stack_node *create_node(int value) {
-    t_stack_node *new_node = (t_stack_node *)malloc(sizeof(t_stack_node));
-    if (!new_node)
-        handle_error("Error: Memory allocation failed");
-    new_node->value = value;
-    new_node->next = NULL;
-    return new_node;
+static long	ft_atol(const char *str)
+{
+	long	nbr;
+	int		negative_nbr;
+	int		i;
+
+	nbr = 0;
+	negative_nbr = 1;
+	i = 0;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'
+			|| str[i] == '\n' || str[i] == '\r'
+			|| str[i] == '\v' || str[i] == '\f'))
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+	{
+		negative_nbr *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nbr = (nbr * 10) + (str[i] - '0');
+		i++;
+	}
+	return (nbr * negative_nbr);
 }
 
-t_stack_node *init_stack(int argc, char **argv) {
-    t_stack_node *stack = NULL;
-    for (int i = 1; i < argc; i++) {
-        int value = ft_atoi(argv[i]);
-        if (check_duplicate(stack))
-            handle_error("Error: Duplicate values found");
-        push_to_stack(&stack, create_node(value), false);
+void	stack_init(t_stack_node **a, char **argv, bool print)
+{
+	long	nbr;
+	int		i;
+
+	i = 0;
+    while (argv[i])
+	{
+        if (error_syntax(argv[i]))
+            free_errors(a);
+        nbr = ft_atol(argv[i]);
+        if (nbr > INT_MAX || nbr < INT_MIN)
+            free_errors(a);
+        if (error_duplicate(*a, (int)nbr))
+            free_errors(a);
+        append_node(a, (int)nbr);
+        ++i;
     }
-    return stack;
+    if (print)
+	{
+        i = 0;
+        while (argv[i])
+		{
+            free(argv[i]);
+            ++i;
+        }
+        free(argv);
+    }
 }

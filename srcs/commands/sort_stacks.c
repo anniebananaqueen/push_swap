@@ -5,48 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 12:33:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/28 16:22:47 by codespace        ###   ########.fr       */
+/*   Created: 2024/09/29 17:29:38 by codespace         #+#    #+#             */
+/*   Updated: 2024/09/29 19:09:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void sort_stack_a(t_stack_node **a, t_stack_node **b) {
-    // Generalized sorting logic for stack A
-    while (!check_sorted(*a)) {
-        move_a_to_b(a, b);  // Pushes from A to B
-    }
-    move_b_to_a(a, b);  // Brings elements back from B to A
-    handle_final_rotation(a);  // Final alignment of elements
+static  void    rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
+{
+    while (*a != cheapest_node->target_node && *b != cheapest_node)
+        rr(a, b, false);
+    set_current_pos(*a);
+    set_current_pos(*b);
 }
 
-void sort_stack_b(t_stack_node **a, t_stack_node **b) {
-    // Similar logic for stack B, if necessary
+static void	reverse_rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node)
+{
+	while (*a != cheapest_node->target_node
+		&& *b != cheapest_node)
+		rrr(a, b, false);
+	set_current_pos(*a);
+	set_current_pos(*b);
 }
 
-void move_a_to_b(t_stack_node **a, t_stack_node **b) {
-    while (*a) {
-        push_to_stack(a, b, true);  // Push from A to B
-        // Consider rotation based on some logic for optimization
-    }
+void	final_rotation(t_stack_node **stack, t_stack_node *top_node, char stack_name)
+{
+	while (*stack != top_node)
+	{
+		if (stack_name == 'a')
+		{
+			if (top_node->above_median)
+				ra(stack, false);
+			else
+				rra(stack, false);
+		}
+		else if (stack_name == 'b')
+		{
+			if (top_node->above_median)
+				rb(stack, false);
+			else
+				rrb(stack, false);
+		}	
+	}
 }
 
-void move_b_to_a(t_stack_node **a, t_stack_node **b) {
-    while (*b) {
-        push_to_stack(b, a, true);  // Push from B to A
-        // Consider rotations or optimizations here
-    }
+static void move_nodes(t_stack_node **a, t_stack_node **b)
+{
+	t_stack_node	*cheapest_node;
+
+	cheapest_node = return_cheapest(*b);
+	if (cheapest_node->above_median
+		&& cheapest_node->target_node->above_median)
+		rotate_both(a, b, cheapest_node);
+	else if (!(cheapest_node->above_median)
+		&& !(cheapest_node->target_node->above_median))
+		reverse_rotate_both(a, b, cheapest_node);
+	final_rotation(b, cheapest_node, 'b');
+	final_rotation(a, cheapest_node->target_node, 'a');
+	pa(a, b, false);
 }
 
-void handle_final_rotation(t_stack_node **a) {
-    // After sorting, ensure smallest element is at the top of A
-    int min_position = find_position(*a, get_min_value(*a));
-    if (min_position <= get_stack_size(*a) / 2) {
-        while (min_position-- > 0)
-            rotate_stack(a, true, "a");
-    } else {
-        while (min_position++ < get_stack_size(*a))
-            reverse_rotate_stack(a, true, "a");
-    }
+void	push_swap(t_stack_node **a, t_stack_node **b)
+{
+	t_stack_node	*min;
+	int				len_a;
+
+	len_a = get_stack_size(*a);
+	if (len_a == 5)
+		sort_three_or_more(a, b);
+	else
+	{
+		while (len_a-- > 3)
+			pb(b, a, false);
+	}
+	sort_three(a);
+	while (*b)
+	{
+		init_nodes(*a, *b);
+		move_nodes(a, b);
+	}
+	set_current_pos(*a);
+	min = find_min(*a);
+	if (min->above_median)
+		while (*a != min)
+			ra(a, false);
+	else
+		while (*a != min)
+			rra(a, false);
 }

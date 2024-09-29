@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:37:29 by codespace         #+#    #+#              #
-#    Updated: 2024/09/24 11:28:32 by codespace        ###   ########.fr        #
+#    Updated: 2024/09/29 18:37:24 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,13 +29,11 @@ COMMANDS_SRC = $(SRC_DIR)commands/push.c \
                $(SRC_DIR)commands/swap.c
 
 PUSH_SWAP_SRC = $(SRC_DIR)push_swap/handle_errors.c \
-                $(SRC_DIR)push_swap/int_a_to_b.c \
-                $(SRC_DIR)push_swap/int_b_to_a.c \
+                $(SRC_DIR)push_swap/nodes_init.c \
                 $(SRC_DIR)push_swap/push_swap.c \
                 $(SRC_DIR)push_swap/split.c \
                 $(SRC_DIR)push_swap/stack_init.c \
-                $(SRC_DIR)push_swap/stack_utils.c \
-                $(SRC_DIR)push_swap/stack_helpers.c 
+                $(SRC_DIR)push_swap/stack_utils.c 
 
 SRCS = $(COMMANDS_SRC) $(PUSH_SWAP_SRC)
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))

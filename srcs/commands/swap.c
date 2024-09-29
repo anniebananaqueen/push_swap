@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 14:30:15 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/24 17:48:47 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/29 17:26:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,31 @@
 
 static  void    swap(t_stack_node **head)
 {
-    t_stack_node *first;
-    t_stack_node *second;
+    int length;
     
-    if (!*head || !(*head)->next)
-        return;
-    first = *head;
-    second = (*head)->next;
-    *head = second;
-    first->next = second->next;
-    if (second->next)
-        second->next->prev = first;
-    second->prev = NULL;
-    second->next = first;
-    first->prev = second;
+    length = get_stack_size(*head);
+    if (*head == NULL || head == NULL || length == 1)
+        return ;
+    *head = (*head)->next;
+    (*head)->prev->prev = *head;
+    (*head)->prev->next = (*head)->next;
+    if ((*head)->next)
+        (*head)->next->prev = (*head)->prev;
+    (*head)->next = (*head)->prev;
+    (*head)->prev = NULL;
 }
 
 void    sa(t_stack_node **a, bool print)
-{  
+{
     swap(a);
-    if (print)
+    if (!print)
         ft_printf("sa\n");
 }
 
 void    sb(t_stack_node **b, bool print)
 {
     swap(b);
-    if (print)
+    if (!print)
         ft_printf("sb\n");
 }
 
@@ -48,6 +46,6 @@ void    ss(t_stack_node **a, t_stack_node **b, bool print)
 {
     swap(a);
     swap(b);
-    if (print)
+    if (!print)
         ft_printf("ss\n");
 }

@@ -5,190 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 15:19:03 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/28 15:22:31 by codespace        ###   ########.fr       */
+/*   Created: 2024/08/15 12:33:27 by codespace         #+#    #+#             */
+/*   Updated: 2024/09/29 18:41:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../inc/push_swap.h"
 
-void sort_three(t_stack_node **a)
+bool    sorted_stack(t_stack_node *stack)
 {
-    int first;
-    int second;
-    int third;
-    t_stack_node *current;
-
-    first = (*a)->nbr;
-    second = (*a)->next->nbr;
-    third = (*a)->next->next->nbr;
-
-    ft_printf("Sorting three elements: %d, %d, %d\n", first, second, third);
-
-    if (first > second && second < third && first < third)
+    if (stack == NULL)
+        return (1);
+    while (stack->next)
     {
-        ft_printf("Case: sa\n");
-        sa(a, true);
-    }
-    else if (first > second && second > third)
-    {
-        ft_printf("Case: sa + rra\n");
-        sa(a, true);
-        rra(a, true);
-    }
-    else if (first > second && second < third && first > third)
-    {
-        ft_printf("Case: ra\n");
-        ra(a, true);
-    }
-    else if (first < second && second > third && first < third)
-    {
-        ft_printf("Case: sa + ra\n");
-        sa(a, true);
-        ra(a, true);
-    }
-    else if (first < second && second > third && first > third)
-    {
-        ft_printf("Case: rra\n");
-        rra(a, true);
-    }
-    ft_printf("Final sorted stack A: ");
-    current = *a;
-    while (current)
-    {
-        ft_printf("%d ", current->nbr);
-        current = current->next;
-    }
-    ft_printf("\n");
-}
-
-void sort_three_or_more(t_stack_node **a, t_stack_node **b)
-{
-    while (stack_len(*a) > 3)
-    {
-        if ((*a)->nbr < calculate_median(*a))
-        {
-            pb(b, a, true);
-        }
-        else
-        {
-            ra(a, true);
-        }
-    }
-    sort_three(a);
-    while (*b)
-    {
-        move_b_to_a(a, b);
-    }
-    min_on_top(a);
-}
-
-int find_kth_smallest(int *arr, int len, int k)
-{
-    int i, j, temp;
-
-    for (i = 0; i <= k; i++)
-    {
-        for (j = i + 1; j < len; j++)
-        {
-            if (arr[j] < arr[i])
-            {
-                // Swap arr[i] and arr[j] to sort the elements
-                temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-    }
-    return arr[k];  // Return the k-th smallest element
-}
-
-int calculate_median(t_stack_node *stack)
-{
-    int len;
-    int *arr;
-    int i;
-    int median;
-    int median_index;
-    t_stack_node *current;
-
-    i = 0;
-    len = stack_len(stack);
-    if (len == 0)
-        return (-1);
-
-    arr = malloc(sizeof(int) * len);
-    if (!arr)
-        return (-1);
-
-    current = stack;
-    while (current)
-    {
-        arr[i] = current->nbr;
-        current = current->next;
-        i++;
-    }
-
-    median_index = len / 2;
-
-    // Debugging print: Array before finding the median
-    ft_printf("Array before median calculation: ");
-    for (int j = 0; j < len; j++)
-        ft_printf("%d ", arr[j]);
-    ft_printf("\n");
-
-    if (len % 2 == 0)
-        median = (find_kth_smallest(arr, len, median_index - 1) + find_kth_smallest(arr, len, median_index)) / 2;
-    else
-        median = find_kth_smallest(arr, len, median_index);
-
-    free(arr);
-    return (median);
-}
-
-bool is_fully_sorted(t_stack_node *stack)
-{
-    t_stack_node *current;
-    
-    current = stack;
-    while (current && current->next)
-    {
-        if (current->nbr > current->next->nbr)
-            return false;
-        current = current->next;
+        if (stack->value > stack->next->value)
+            return (false);
+        stack = stack->next;
     }
     return (true);
 }
 
-void final_rotation_handling(t_stack_node **a)
+static t_stack_node *find_max(t_stack_node *stack)
 {
-    int min_pos = find_min_position(*a);  // Find the position of the smallest number
-    int stack_size = stack_len(*a);
+    int max;
+    t_stack_node    *top_node;
 
-    if (min_pos == 0)
+    if (stack == NULL)
+        return (NULL);
+    max = INT_MIN;
+    while (stack)
     {
-        ft_printf("Stack is already aligned with the minimum at the top.\n");
-        return;  // If the smallest number is already at the top, no need for rotations
+        if (stack->value > max)
+        {
+            max = stack->value;
+            top_node = stack;
+        }
+        stack = stack->next;
     }
+    return (top_node);
+}
 
-    // Determine if it's faster to rotate forward (ra) or reverse (rra)
-    if (min_pos <= stack_size / 2)
+void    sort_three(t_stack_node **a)
+{
+    t_stack_node    *top_node;
+
+    top_node = find_max(*a);
+    if (*a == top_node)
+        ra(a, false);
+    else if ((*a)->next == top_node)
+        rra(a, false);
+    if ((*a)->value > (*a)->next->value)
+        sa(a, false);
+}
+
+void    sort_three_or_more(t_stack_node **a, t_stack_node **b)
+{
+    while (get_stack_size(*a) > 3)
     {
-        // Rotate forward (ra) to bring the minimum to the top
-        while (min_pos-- > 0)
-        {
-            ft_printf("Performing ra to align stack...\n");
-            ra(a, true);
-        }
-    }
-    else
-    {
-        // Rotate backward (rra) to bring the minimum to the top
-        while (min_pos++ < stack_size)
-        {
-            ft_printf("Performing rra to align stack...\n");
-            rra(a, true);
-        }
+        init_nodes(*a, *b);
+        final_rotation(a, find_min(*a), 'a');
+        pb(b, a, false);
     }
 }
