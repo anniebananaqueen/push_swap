@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: apatkano <apatkano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 16:13:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 20:31:29 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/12 18:32:09 by apatkano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void	free_split (char **array)
+void	free_split(char **result)
 {
 	int	i;
 
 	i = 0;
-	if (!array)
+	if (!result)
 		return ;
-	while (array[i])
+	while (result[i])
 	{
-		free(array[i]);
+		free(result[i]);
 		i++;
 	}
-	free(array);
+	free(result);
 }
 
-static	char	*substring(const char *s, int start, int len)
+static char	*substring(const char *s, int start, int len)
 {
 	char	*sub;
 	int		i;
@@ -47,9 +47,9 @@ static	char	*substring(const char *s, int start, int len)
 	return (sub);
 }
 
-static	int	substring_count(char *s, char delimeter)
+static int	substring_count(char *s, char delimeter)
 {
-	int	count;
+	int		count;
 	bool	in_substring;
 
 	count = 0;
@@ -71,11 +71,25 @@ static	int	substring_count(char *s, char delimeter)
 	return (count);
 }
 
+static int	add_substring(char **result, char *s, int start, int end)
+{
+	char	*substr;
+
+	substr = substring(s, start, end - start);
+	if (!substr)
+	{
+		free_split(result);
+		return (-1);
+	}
+	result[end] = substr;
+	return (0);
+}
+
 char	**split_string(char *s, char delimiter)
 {
-	int	i;
-	int	j;
-	int	start;
+	int		i;
+	int		j;
+	int		start;
 	char	**result;
 
 	if (!s)
@@ -85,23 +99,19 @@ char	**split_string(char *s, char delimiter)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (s[i])
+	while (s[i] && j != -1)
 	{
 		while (s[i] == delimiter)
 			i++;
 		start = i;
 		while (s[i] && s[i] != delimiter)
 			i++;
-		if (i > start)
+		if (i > start && add_substring(result, s, start, i) == -1)
 		{
-			result[j] = substring(s, start, i - start);
-			if (!result[j])
-			{
-				free_split(result);
-				return (NULL);
-			}
-			j++;
+			free_split(result);
+			return (NULL);
 		}
+		j++;
 	}
 	result[j] = NULL;
 	return (result);

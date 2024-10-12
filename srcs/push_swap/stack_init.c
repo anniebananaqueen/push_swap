@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: apatkano <apatkano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/29 21:19:36 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/12 18:48:48 by apatkano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ static long	ft_atol(const char *str)
 	nbr = 0;
 	negative_nbr = 1;
 	i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'
-			|| str[i] == '\n' || str[i] == '\r'
-			|| str[i] == '\v' || str[i] == '\f'))
+	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
 		i++;
 	if (str[i] == '+')
 		i++;
@@ -40,32 +39,22 @@ static long	ft_atol(const char *str)
 	return (nbr * negative_nbr);
 }
 
-void	stack_init(t_stack_node **a, char **argv, bool slay)
+void	stack_init(t_stack_node **a, char **argv, bool init)
 {
 	long	nbr;
 	int		i;
 
 	i = 0;
-    while (argv[i])
+	while (argv[i])
 	{
-        if (error_syntax(argv[i]))
-            free_errors(a, argv, slay);
-        nbr = ft_atol(argv[i]);
-        if (nbr > INT_MAX || nbr < INT_MIN)
-            free_errors(a, argv, slay);
-        if (error_duplicate(*a, (int)nbr))
-            free_errors(a, argv, slay);
-        append_node(a, (int)nbr);
-        ++i;
-    }
-    if (slay)
-	{
-        i = 0;
-        while (argv[i])
-		{
-            free(argv[i]);
-            ++i;
-        }
-        free(argv);
-    }
+		if (error_syntax(argv[i]))
+			free_errors(a, argv, init);
+		nbr = ft_atol(argv[i]);
+		if (nbr > INT_MAX || nbr < INT_MIN)
+			free_errors(a, argv, init);
+		if (error_duplicate(*a, (int)nbr))
+			free_errors(a, argv, init);
+		append_node(a, (int)nbr);
+		++i;
+	}
 }
