@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stacks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apatkano <apatkano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:29:38 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/12 16:59:11 by apatkano         ###   ########.fr       */
+/*   Updated: 2024/10/13 11:19:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,16 @@ void	push_swap(t_stack_node **a, t_stack_node **b)
 	int				len_a;
 
 	len_a = get_stack_size(*a);
-	if (len_a == 5)
-		sort_three_or_more(a, b);
-	else
+	if (len_a > 3)
 	{
 		while (len_a-- > 3)
 			pb(b, a, false);
+		sort_three(a);
 	}
-	sort_three(a);
+	else if (len_a == 3)
+		sort_three(a);
+	else if (len_a == 2)
+		sa(a, false);
 	while (*b)
 	{
 		init_nodes(*a, *b);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apatkano <apatkano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:10:31 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/12 16:53:58 by apatkano         ###   ########.fr       */
+/*   Updated: 2024/10/13 11:37:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_stack_node	*find_min(t_stack_node *stack)
 
 	if (stack == NULL)
 		return (NULL);
-	min = LONG_MAX;
+	min = INT_MAX;
 	while (stack)
 	{
 		if (stack->value < min)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apatkano <apatkano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:40:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/12 18:48:48 by apatkano         ###   ########.fr       */
+/*   Updated: 2024/10/13 11:34:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,21 @@
 static long	ft_atol(const char *str)
 {
 	long	nbr;
-	int		negative_nbr;
 	int		i;
 
 	nbr = 0;
-	negative_nbr = 1;
 	i = 0;
 	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
 			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
 		i++;
-	if (str[i] == '+')
+	if (str[i] == '+' && str[i] == '-')
 		i++;
-	else if (str[i] == '-')
-	{
-		negative_nbr *= -1;
-		i++;
-	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		nbr = (nbr * 10) + (str[i] - '0');
 		i++;
 	}
-	return (nbr * negative_nbr);
+	return (nbr);
 }
 
 void	stack_init(t_stack_node **a, char **argv, bool init)
