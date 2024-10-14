@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: apatkano <apatkano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:08:58 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/13 11:22:24 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/14 17:25:54 by apatkano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	free_stack(t_stack_node **stack)
 	*stack = NULL;
 }
 
-void free_errors(t_stack_node **a, char **argv, bool error)
+void	free_errors(t_stack_node **a, char **argv, bool error)
 {
-    if (a && *a)
-        free_stack(a);
-    if (error && argv != NULL)
-        free_split(argv);
-    ft_putstr_fd("Error\n", 2);
-    exit(EXIT_FAILURE);
+	if (a && *a)
+		free_stack(a);
+	if (error && argv != NULL)
+		free_split(argv);
+	ft_putstr_fd("Error\n", 2);
+	exit(EXIT_FAILURE);
 }
